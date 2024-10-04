@@ -11,7 +11,7 @@ def main():
     env = CartPoleEnv()  # 初始化环境
     episodes = 500  # 训练回合数
 
-     # 训练 Q-Learning 智能体
+    # 训练 Q-Learning 智能体
     print("Training Q-Learning Agent...")
     q_learning_agent = QLearning(env.observation_space.n, env.action_space.n, alpha=0.1, gamma=0.9, epsilon=0.1)
     q_learning_agent.train(env, episodes)
