@@ -1,7 +1,8 @@
 import numpy as np
 
-# Q-Learning 算法实现
-class QLearning:
+
+# SARSA 算法实现
+class SARSA:
     def __init__(self, n_states, n_actions, alpha, gamma, epsilon):
         # 初始化参数
         self.n_states = n_states
@@ -18,20 +19,21 @@ class QLearning:
             return np.random.choice(self.n_actions)
         return np.argmax(self.q_table[state, :])
 
-    def learn(self, state, action, reward, next_state):
-        # 使用 Q-Learning 更新规则更新 Q 值
+    def learn(self, state, action, reward, next_state, next_action):
+        # 使用 SARSA 更新规则更新 Q 值
         predict = self.q_table[state, action]
-        target = reward + self.gamma * np.max(self.q_table[next_state, :])
+        target = reward + self.gamma * self.q_table[next_state, next_action]
         self.q_table[state, action] += self.alpha * (target - predict)
 
     def train(self, env, episodes):
         # 训练智能体多个回合
         for episode in range(episodes):
             state = env.reset()
+            action = self.choose_action(state)
             while True:
-                action = self.choose_action(state)
                 next_state, reward, done, _ = env.step(action)
-                self.learn(state, action, reward, next_state)
-                state = next_state
+                next_action = self.choose_action(next_state)
+                self.learn(state, action, reward, next_state, next_action)
+                state, action = next_state, next_action
                 if done:
                     break
