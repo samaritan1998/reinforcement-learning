@@ -12,8 +12,10 @@
 ```
 reinforcement-learning/
 ├── environments/
+│   ├── __init__.py
 │   ├── cartpole.py
 ├── algorithms/
+│   ├── __init__.py
 │   ├── q_learning.py
 │   ├── sarsa.py
 │   ├── dqn.py
